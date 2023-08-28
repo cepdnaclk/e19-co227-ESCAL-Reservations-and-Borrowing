@@ -2,14 +2,13 @@
 layout: home
 permalink: index.html
 
-# Please update this with your repository name and title
-repository-name: eYY-XXX-project-template
-title:
+repository-name: e19-co227-ESCAL-Reservations-and-Borrowing
+title: ESCAL Reservations and Borrowing
 ---
 
 [comment]: # "This is the standard layout for the project, but you can clean this and use your own template"
 
-# Project Title
+# ESCAL Reservations and Borrowing
 
 ---
 
@@ -20,9 +19,10 @@ This is a sample image, to show how to add images to your page. To learn more op
  -->
 
 ## Team
--  eNumber, Name, [email](mailto:name@email.com)
--  eNumber, Name, [email](mailto:name@email.com)
--  eNumber, Name, [email](mailto:name@email.com)
+-  E/19/240, Mendis B.M.S., [email](mailto:e19240@eng.pdn.ac.lk)
+-  E/19/278, Perera A.P.T.T., [email](mailto:e19278@eng.pdn.ac.lk)
+-  E/19/426, Weerasinghe P.M., [email](mailto:e19426@eng.pdn.ac.lk)
+-  E/19/453, Withanaarachchi W.A.A.M.T., [email](mailto:e19453@eng.pdn.ac.lk)
 
 ## Table of Contents
 1. [Introduction](#introduction)
