@@ -1,7 +1,3 @@
+# ESCAL Reservations and Borrowing
 ___
-# DELETE THIS INSTRUCTIONS AND ADD A SHORT INTRODUCTION ABOUT YOUR PROJECT
-___
-
-## Please refer the instructions in below URL:
-
-https://projects.ce.pdn.ac.lk/docs/how-to-add-a-project
+Welcome to the git repository for the system of reservation and borrowing of components and workspaces of the Embedded Systems and Computer Architecture Laboratory (ESCAL) of the Department of Computer Engineering at the University of Peradeniya.
