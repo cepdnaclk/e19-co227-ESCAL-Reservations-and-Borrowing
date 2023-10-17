@@ -73,6 +73,7 @@ class ComponentItemController extends Controller
 
             return redirect()->route('admin.component.items.edit.location', $type)->with('Success', 'Component was created !');
         } catch (\Exception $ex) {
+            dd($ex);
             return abort(500);
         }
     }
@@ -147,6 +148,7 @@ class ComponentItemController extends Controller
 
             return redirect()->route('admin.component.items.index')->with('Success', 'Component was updated !');
         } catch (\Exception $ex) {
+            dd($ex);
             return abort(500);
         }
     }

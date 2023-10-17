@@ -75,6 +75,9 @@
                     <li class="c-sidebar-nav-item">
                         <x-utils.link :href="route('admin.component.types.index')" class="c-sidebar-nav-link" :text="__('Types')"></x-utils.link>
                     </li>
+                    <li class="c-sidebar-nav-item">
+                        <x-utils.link :href="route('admin.component.reservation.index')" class="c-sidebar-nav-link" :text="__('Resrvations')"></x-utils.link>
+                    </li>
                 </ul>
             </li>
 

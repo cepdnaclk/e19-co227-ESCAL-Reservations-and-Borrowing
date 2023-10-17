@@ -28,6 +28,6 @@ class ComponentItemSeeder extends Seeder
 
         $this->command->info('Inserted ' . count($this->data) . ' records to component_items table');
 
-        ComponentItem::factory(20)->create();
+        // ComponentItem::factory(20)->create();
     }
 }

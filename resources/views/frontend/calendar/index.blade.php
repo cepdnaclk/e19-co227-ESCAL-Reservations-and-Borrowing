@@ -446,15 +446,7 @@
                 @endphp
 
                 <div class="input-group mb-4">
-                  <input type="text" id="enumber" name="title1" class="form-control" placeholder="{{ $enum }}" value="{{ $enum }}" readonly/>
-                </div>
-
-                <div class="input-group mb-4">
-                <input type="text" id="enumber" name="title2" class="form-control" placeholder="E/XX/XXX" />
-                </div>
-
-                <div class="input-group mb-4">
-                <input type="text" id="enumber" name="title3" class="form-control" placeholder="E/XX/XXX" />
+                  <input type="text" id="enumber" name="title" class="form-control" placeholder="{{ $enum }}" value="{{ $enum }}"/>
                 </div>
 
                 <div class="row mb-4">

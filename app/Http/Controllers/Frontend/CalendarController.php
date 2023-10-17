@@ -82,14 +82,8 @@ class CalendarController extends Controller
 
         $request->validate([
             'start_date' => 'required',
-            'title1' => ['required',
-                        'regex:/^E\/\d{2}\/\d{3}$/'],
-            'title2' => ['required',
-                        'regex:/^E\/\d{2}\/\d{3}$/'],
             'comments' => 'required'
         ]);
-
-        $request['title'] = $request->title1 . ', ' . $request->title2;
 
         $date = $request->start_date;
 

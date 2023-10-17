@@ -9,7 +9,7 @@
     @foreach($componentItem as $product)
         <div class="col-xs-18 col-sm-6 col-md-3">
             <div class="thumbnail">
-                <img src="{{ $product->image }}" alt="">
+                <img src="{{ $product->thumbURL() }}" alt="">
                 <div class="caption">
                     <h4>{{ $product->title }}</h4>
                     <h4>{{ $product->id }}</h4>

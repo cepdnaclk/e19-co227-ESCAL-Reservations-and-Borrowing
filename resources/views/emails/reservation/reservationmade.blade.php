@@ -5,9 +5,9 @@
 
 Group members: <b>{{ $booking->E_numbers}}</b><br>
 Station: <b>{{ $station->stationName}} </b><br>
-Date and Time: <b>{{ \Carbon\Carbon::parse($booking->start_date)->format('Y-m-d H:i:s') }} 
-    ({{ \Carbon\Carbon::parse($booking->start_date)->format('Y-m-d H:i:s') }}-
-    {{ \Carbon\Carbon::parse($booking->end_date)->format('Y-m-d H:i:s') }}) </b>
+Date and Time: <b>
+    {{ \Carbon\Carbon::parse($booking->start_date)->format('Y-m-d H:i:s') }}-
+    {{ \Carbon\Carbon::parse($booking->end_date)->format('Y-m-d H:i:s') }} </b>
 
 Approval State: Pending
 

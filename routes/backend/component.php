@@ -1,8 +1,9 @@
 <?php
 
+use Tabuna\Breadcrumbs\Trail;
 use App\Http\Controllers\Backend\ComponentItemController;
 use App\Http\Controllers\Backend\ComponentTypeController;
-use Tabuna\Breadcrumbs\Trail; 
+use App\Http\Controllers\Backend\ComponentReservationController;
 
 Route::middleware(['editAccess'])->group(function () {
 
@@ -151,5 +152,50 @@ Route::middleware(['editAccess'])->group(function () {
     // Destroy
     Route::delete('components/types/{componentType}', [ComponentTypeController::class, 'destroy'])
         ->name('component.types.destroy');
+
+    // Component reservation routes
+
+    // Index
+    Route::get('components/reservation', [ComponentReservationController::class, 'index'])
+        ->name('component.reservation.index')
+        ->breadcrumbs(function (Trail $trail) {
+            $trail->push(__('Home'), route('admin.dashboard'))
+                ->push(__('Components'), route('admin.component.index'))
+                ->push(__('Reservations'));
+        });
+
+    // Show
+    Route::get('components/reservation/{reservation}', [ComponentReservationController::class, 'show'])
+        ->name('components.reservation.show')
+        ->breadcrumbs(function (Trail $trail) {
+            $trail->push(__('Home'), route('admin.dashboard'))
+                ->push(__('Components'), route('admin.component.index'))
+                ->push(__('Reservations'), route('admin.component.reservation.index'))
+                ->push(__('Show'));
+        })
+        ;
+
+    // Edit
+   Route::get('components/reservation/edit/{reservation}', [ComponentReservationController::class, 'edit_main'])
+   ->name('components.reservation.edit')
+   ->breadcrumbs(function (Trail $trail) {
+       $trail->push(__('Home'), route('admin.dashboard'))
+            ->push(__('Components'), route('admin.component.index'))
+            ->push(__('Reservations'), route('admin.component.reservation.index'))
+            ->push(__('Edit'));
+   })
+   ;
+
+    // Update
+    Route::put('components/reservation/{reservation}', [ComponentReservationController::class, 'update_main'])
+        ->name('components.reservation.update');
+        
+    // Delete
+    Route::get('components/reservation/delete/{reservation}', [ComponentReservationController::class, 'delete'])
+        ->name('components.reservation.delete');
+
+   // Approve
+//    Route::put('components/reservation/{reservation}', [ComponentReservationController::class, 'approve'])
+//    ->name('components.reservation.approve');
 
 });

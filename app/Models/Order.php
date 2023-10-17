@@ -11,6 +11,7 @@ class Order extends Model
 {
     use HasFactory;
     protected $guarded = [];
+    // protected $fillable = ['comments'];
 
     public function componentItems()
     {
@@ -39,5 +40,17 @@ class Order extends Model
 
     public function checkOtp($otp){
         return $otp==$this->otp;
+    }
+
+    public function res_info()
+    {
+        if ($this->user_id != null) return $this->belongsTo(User::class, 'user_id', 'id');
+        return null;
+    }
+
+    public function enum_info()
+    {
+        if ($this->user_id != null) return $this->belongsTo(User::class, 'user_id', 'id');
+        return null;
     }
 }

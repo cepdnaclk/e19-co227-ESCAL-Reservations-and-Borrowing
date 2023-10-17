@@ -47,7 +47,7 @@ class CartController
                 "name" => $componentItem->title,
                 "quantity" => 1,
                 "code" => $componentItem->id,
-                "image" => $componentItem->image
+                "image" => $componentItem->thumbURL()
             ];
         }
 
@@ -96,8 +96,9 @@ class CartController
     //    $user_id=$request->user()->id;
        // $order_date=$data['ordered_date'];
       $orders=Order::where('id',$request->user()->id)->get();
+      $orders=$order;
    // return  Order::where('id',$request->user()->id)->get();;
-    return view('frontend.orders.index', compact('orders'));
+    return view('frontend.orders.index', compact('order'));
      return response()->json($order,200);
     }    
 

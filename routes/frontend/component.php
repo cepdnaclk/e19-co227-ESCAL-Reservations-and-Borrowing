@@ -1,9 +1,10 @@
 <?php
 
-use App\Http\Controllers\Frontend\ComponentView;
 use App\Models\ComponentItem;
 use App\Models\ComponentType;
 use Tabuna\Breadcrumbs\Trail;
+use App\Http\Controllers\Frontend\ComponentView;
+use App\Http\Controllers\Backend\ComponentReservationController;
 
 
 Route::prefix('components')->group(function () {
@@ -71,4 +72,16 @@ Route::prefix('components')->group(function () {
 
             $trail->push($componentItem->title);
         });
+
+
+    // Show
+    Route::get('/reservation/{reservation}', [ComponentReservationController::class, 'show'])
+        ->name('components.reservation.show')
+        ->breadcrumbs(function (Trail $trail) {
+            $trail->push(__('Home'), route('admin.dashboard'))
+                ->push(__('Components'), route('admin.component.index'))
+                ->push(__('Reservations'), route('admin.component.reservation.index'))
+                ->push(__('Show'));
+        })
+        ;
 });

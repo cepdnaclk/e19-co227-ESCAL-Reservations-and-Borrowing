@@ -30,7 +30,8 @@ class OrderFactory extends Factory
             'due_date_to_return' => $this->faker->date(),
             'returned_date'=>NULL,
             'user_id' => User::all()->random()->id ,
-            'status' => $this->faker->randomElement(['pending','progress', 'ready',  'pickedup'])
+            'status' => $this->faker->randomElement(['pending','progress', 'ready',  'picked']),
+            'cart' => []
         ];
     }
 }

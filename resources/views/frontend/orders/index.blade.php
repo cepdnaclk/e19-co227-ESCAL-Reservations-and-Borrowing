@@ -14,10 +14,10 @@
                 <tr>
                     <th>UserId</th>
                     <th>Ordered_Date</th>
+                    <th>Items</th>
                     <th>Picked_date</th>
                     <th>Due_date_to_return</th>
                     <th>Returned_date</th>
-                    <th>OTP</th>
                     <th>Status</th>
                     
                 </tr>
@@ -27,15 +27,19 @@
     
 
                 <tr>
-                   @foreach ($orders as $order )
-                   <td>{{$order->id}}</td>
-                   <td><{{$order->ordered_date}}</td>
+                   <td>{{$order->user_id}}</td>
+                   <td>{{$order->ordered_date}}</td>
+                   <td>
+                        @foreach ($order->componentItems as $item)
+                            <ul>
+                                {{$item->title}}
+                            </ul>
+                        @endforeach
+                   </td>
                    <td>{{$order->picked_date}}</td>
                    <td>{{$order->due_date_to_return}}</td>
                    <td>{{$order->returned_date}}</td>
-                   <td>{{$order->otp}}</td>
-                   <td>{{$order->status}}</td>
-                   @endforeach
+                   <td>pending</td>
                   
                 </tr>
               
