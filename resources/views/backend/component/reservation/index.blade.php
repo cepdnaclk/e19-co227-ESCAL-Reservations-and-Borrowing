@@ -79,17 +79,18 @@
                                                class="btn btn-secondary btn-xs"><i class="fa fa-eye" title="Show"></i>
                                             </a>
 
-                                            <!-- Edit -->
-                                            <a href="{{ route('admin.components.reservation.edit', $res)}}"
-                                               class="btn btn-info btn-xs"><i class="fa fa-pencil" title="Edit"></i>
-                                            </a>
+                                            @if ($logged_in_user->hasAllAccess())
+                                                <!-- Edit -->
+                                                <a href="{{ route('admin.components.reservation.edit', $res)}}"
+                                                class="btn btn-info btn-xs"><i class="fa fa-pencil" title="Edit"></i>
+                                                </a>
 
-                                            <!-- Delete -->
-                                            <a href="{{ route('admin.components.reservation.delete', $res)}}"
-                                               class="btn btn-danger btn-xs"><i class="fa fa-trash"
-                                                                                title="Delete"></i>
-                                            </a>
-                                            
+                                                <!-- Delete -->
+                                                <a href="{{ route('admin.components.reservation.delete', $res)}}"
+                                                class="btn btn-danger btn-xs"><i class="fa fa-trash"
+                                                                                    title="Delete"></i>
+                                                </a>
+                                            @endif
                                         </div>
                                     </div>
                                     

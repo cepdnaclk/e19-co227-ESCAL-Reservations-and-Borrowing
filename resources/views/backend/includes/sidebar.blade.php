@@ -62,39 +62,49 @@
                     </li>
                 </ul>
             </li>
+        @endif
 
+        
             {{-- Components --}}
             <li class="c-sidebar-nav-dropdown">
                 <x-utils.link href="#" icon="c-sidebar-nav-icon cil-list" class="c-sidebar-nav-dropdown-toggle"
                     :text="__('Components')"></x-utils.link>
 
                 <ul class="c-sidebar-nav-dropdown-items">
-                    <li class="c-sidebar-nav-item">
-                        <x-utils.link :href="route('admin.component.items.index')" class="c-sidebar-nav-link" :text="__('Items')"></x-utils.link>
-                    </li>
-                    <li class="c-sidebar-nav-item">
-                        <x-utils.link :href="route('admin.component.types.index')" class="c-sidebar-nav-link" :text="__('Types')"></x-utils.link>
-                    </li>
-                    <li class="c-sidebar-nav-item">
-                        <x-utils.link :href="route('admin.component.reservation.index')" class="c-sidebar-nav-link" :text="__('Resrvations')"></x-utils.link>
-                    </li>
+                    @if ($logged_in_user->hasInventoryAccess())
+                        <li class="c-sidebar-nav-item">
+                            <x-utils.link :href="route('admin.component.items.index')" class="c-sidebar-nav-link" :text="__('Items')"></x-utils.link>
+                        </li>
+                        <li class="c-sidebar-nav-item">
+                            <x-utils.link :href="route('admin.component.types.index')" class="c-sidebar-nav-link" :text="__('Types')"></x-utils.link>
+                        </li>
+                        <li class="c-sidebar-nav-item">
+                            <x-utils.link :href="route('admin.component.reservation.index')" class="c-sidebar-nav-link" :text="__('Resrvations')"></x-utils.link>
+                        </li>
+                    @else
+                        <li class="c-sidebar-nav-item">
+                            <x-utils.link :href="route('frontend.components.reservation.index')" class="c-sidebar-nav-link" :text="__('Resrvations')"></x-utils.link>
+                        </li>
+                    @endif
                 </ul>
             </li>
+        
 
-            {{-- Consumables --}}
-            <li class="c-sidebar-nav-dropdown">
-                <x-utils.link href="#" icon="c-sidebar-nav-icon cil-list" class="c-sidebar-nav-dropdown-toggle"
-                    :text="__('Consumables')"></x-utils.link>
+        @if ($logged_in_user->hasInventoryAccess())
+        {{-- Consumables --}}
+        <li class="c-sidebar-nav-dropdown">
+            <x-utils.link href="#" icon="c-sidebar-nav-icon cil-list" class="c-sidebar-nav-dropdown-toggle"
+                :text="__('Consumables')"></x-utils.link>
 
-                <ul class="c-sidebar-nav-dropdown-items">
-                    <li class="c-sidebar-nav-item">
-                        <x-utils.link :href="route('admin.consumable.items.index')" class="c-sidebar-nav-link" :text="__('Items')"></x-utils.link>
-                    </li>
-                    <li class="c-sidebar-nav-item">
-                        <x-utils.link :href="route('admin.consumable.types.index')" class="c-sidebar-nav-link" :text="__('Types')"></x-utils.link>
-                    </li>
-                </ul>
-            </li>
+            <ul class="c-sidebar-nav-dropdown-items">
+                <li class="c-sidebar-nav-item">
+                    <x-utils.link :href="route('admin.consumable.items.index')" class="c-sidebar-nav-link" :text="__('Items')"></x-utils.link>
+                </li>
+                <li class="c-sidebar-nav-item">
+                    <x-utils.link :href="route('admin.consumable.types.index')" class="c-sidebar-nav-link" :text="__('Types')"></x-utils.link>
+                </li>
+            </ul>
+        </li>
         @endif
 
         {{-- Fabrication Requests --}}

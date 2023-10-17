@@ -7,6 +7,11 @@ use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\StationConfirmationMail;
+use App\Mail\ComponentReservationMail;
 
 class ComponentReservationController extends Controller
 {
@@ -21,8 +26,31 @@ class ComponentReservationController extends Controller
         return view('backend.component.reservation.index', compact('reservation'));
     }
 
+    public function index_user()
+    {
+        $user = Auth::user();
+        $reservations = Order::where('user_id', $user->id)->paginate(10);
+
+        foreach ($reservations as $reservation) {
+            $this->authorize('view-order', $reservation);
+        }
+        $reservation = $reservations;
+        
+        return view('backend.component.reservation.index', compact('reservation'));
+    }
+
     public function show(Order $reservation)
     {
+        $user = Auth::user();
+        $this->authorize('view-order', $reservation);
+
+        return view('backend.component.reservation.show', compact('reservation'));
+    }
+
+    public function show_user(Order $reservation)
+    {
+        $user = Auth::user();
+
         return view('backend.component.reservation.show', compact('reservation'));
     }
 
@@ -58,45 +86,42 @@ class ComponentReservationController extends Controller
             if (App::environment(['staging'])) {
                 dd('Not sending emails');
             } 
-            // else {
-            // try {
-            //     $enums = explode(',', $booking->E_numbers);
+            else {
+            try {
+                $enum = explode('@', $reservation->user_info()->email)[0];
 
-            //     foreach ($enums as $enum) {
+                // get enumber
+                $batch = substr($enum, 1, 2);
+                $regnum = substr($enum, 3, 5);
 
-            //         // get enumber
-            //         $enum1 = explode('/', $enum);
-            //         $batch = $enum1[1];
-            //         $regnum = $enum1[2];
+                //set api url
+                $apiurl = 'https://api.ce.pdn.ac.lk/people/v1/students/E' . '' . $batch . '/' . $regnum . '/';
 
-            //         //set api url
-            //         $apiurl = 'https://api.ce.pdn.ac.lk/people/v1/students/E' . '' . $batch . '/' . $regnum . '/';
+                //api call
+                $response = Http::withoutVerifying()
+                    ->get($apiurl);
 
-            //         //api call
-            //         $response = Http::withoutVerifying()
-            //             ->get($apiurl);
+                //extract email address
+                $email = ($response['emails']['faculty']['name'] . '@' . $response['emails']['faculty']['domain']);
 
-            //         //extract email address
-            //         $email = ($response['emails']['faculty']['name'] . '@' . $response['emails']['faculty']['domain']);
+                // $email = 'e19453@eng.pdn.ac.lk';
 
-            //         // $email = 'e19453@eng.pdn.ac.lk';
+                //get user
+                $user = auth()->user();
 
-            //         //get user
-            //         $user = auth()->user();
+                //send mail
+                Mail::to($email)
+                    ->send(new ComponentReservationMail($reservation->user_info(), $reservation));
 
-            //         //send mail
-            //         Mail::to($email)
-            //             ->send(new StationConfirmationMail(auth()->user(), $station, $booking));
 
-            //     }
-            // } catch (\Exception $e) {
-            //     return response()->json([
-            //         'error' => 'enumber null',
-            //         'code' => $e->getCode(), // Include the exception code
-            //         'message' => $e->getMessage(), // Include the exception message
-            //     ], 404);
-            // }
-        // }
+            } catch (\Exception $e) {
+                return response()->json([
+                    'error' => 'enumber null',
+                    'code' => $e->getCode(), // Include the exception code
+                    'message' => $e->getMessage(), // Include the exception message
+                ], 404);
+            }
+        }
 
 
 

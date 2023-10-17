@@ -2,16 +2,14 @@
 
 namespace App\Http\Controllers\Frontend\User;
 
-use id;
-use index;
 use Carbon\Carbon;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use App\Models\ComponentItem;
-use App\Domains\Auth\Models\User ;
-use App\Models\ComponentItemOrder;
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\ComponentReservationMail;
 
 /**
  * Class CartController.
@@ -87,11 +85,54 @@ class CartController
         $data['ordered_date'] = Carbon::now()->format('Y-m-d');
         $data['user_id'] = $request->user()->id;
         $order = new Order($data);
+        $order->status = 'pending';
         $order->save();
+
+        $reservation = $order;
 
         for ($i = 0; $i < count($web['product']); $i++) {
             $order->componentItems()->attach($web['product'][$i], array('quantity' => $request->quantity[$i]));
         }
+
+        if (App::environment(['staging'])) {
+            dd('Not sending emails');
+        } 
+        else {
+        try {
+            $enum = explode('@', $reservation->user_info()->email)[0];
+
+            // get enumber
+            $batch = substr($enum, 1, 2);
+            $regnum = substr($enum, 3, 5);
+
+            //set api url
+            $apiurl = 'https://api.ce.pdn.ac.lk/people/v1/students/E' . '' . $batch . '/' . $regnum . '/';
+
+            //api call
+            $response = Http::withoutVerifying()
+                ->get($apiurl);
+
+            //extract email address
+            $email = ($response['emails']['faculty']['name'] . '@' . $response['emails']['faculty']['domain']);
+
+            // $email = 'e19453@eng.pdn.ac.lk';
+
+            //get user
+            $user = auth()->user();
+
+            //send mail
+            Mail::to($email)
+                ->send(new ComponentReservationMail($reservation->user_info(), $reservation));
+
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => 'enumber null',
+                'code' => $e->getCode(), // Include the exception code
+                'message' => $e->getMessage(), // Include the exception message
+            ], 404);
+        }
+    }
 
     //    $user_id=$request->user()->id;
        // $order_date=$data['ordered_date'];

@@ -50,6 +50,10 @@ class AuthServiceProvider extends ServiceProvider
 //        Gate::after(function ($user) {
 //            return $user->hasAllAccess();
 //        });
+
+        Gate::define('view-order', function ($user, $order) {
+            return $user->id === $order->user_id;
+        });
     }
 
     protected function setFrontEndUrlInResetPasswordEmail($frontEndUrl = '')

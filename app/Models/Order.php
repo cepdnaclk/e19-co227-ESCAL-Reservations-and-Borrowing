@@ -53,4 +53,9 @@ class Order extends Model
         if ($this->user_id != null) return $this->belongsTo(User::class, 'user_id', 'id');
         return null;
     }
+
+    public function user_info()
+    {
+        return User::find($this->user_id);
+    }
 }

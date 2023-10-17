@@ -74,14 +74,14 @@ Route::prefix('components')->group(function () {
         });
 
 
+
+    // Index
+    Route::get('/reservation', [ComponentReservationController::class, 'index_user'])
+        ->name('components.reservation.index')
+        ;
+
     // Show
-    Route::get('/reservation/{reservation}', [ComponentReservationController::class, 'show'])
+    Route::get('/reservation/{reservation}', [ComponentReservationController::class, 'show_user'])
         ->name('components.reservation.show')
-        ->breadcrumbs(function (Trail $trail) {
-            $trail->push(__('Home'), route('admin.dashboard'))
-                ->push(__('Components'), route('admin.component.index'))
-                ->push(__('Reservations'), route('admin.component.reservation.index'))
-                ->push(__('Show'));
-        })
         ;
 });
